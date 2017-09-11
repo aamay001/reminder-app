@@ -1,0 +1,10 @@
+language: node_js
+node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: IW67jV+Su74SeoCI3QH39NmywJnsCP9ipRU/iDX1f9ZCZdW6rPCiRNxczyqSy8xP+gDS017hPu1IeNhJYnUasGGTAuFrQprp5GTTxoXifU5WVtOTmzVRDctv9i7OF/5Sen0AV0C27gn3Qy/a45JjfVKVEXoauRqCpUMY6HAf1hXF2aEdUC3tScFTTwSELpDo2DCstxe3EXqIhoi/dYj0+2Eb+hUSySt6BWQxxMlKhGMup//pw/1NxnVUieaohRkSMKq0DRjIpcN+hQ4SbnoKZ2+oSb/MnwTMoXFM6JPU9LwomCnpTGApSIsUGMf3NGgCvxvlRpRVCmNIvM0P7f1VKxybrueRg4LDWCqbli67XKpkJ3tVxQYrsWDrk2FC2K8TLY8M9UJncw3K0op91WSMJ8zqu4wAOkDGeXU0/qmUtCssoHC+c92+Z/WtWnGY69b0RFfRYo/Ys1sP6dGVevFrZGH182CWIiN0wqLnoKm6hN0aVNJL6Qy6hKCKJU8ODA4+39jrVtG9Z+R+6rZ9qsVcHgxQ0PKfXg9IZbV19R7yaPJQIZbV3FEoL1aWWSYdD62qqZTzzfU7z51J0H/IGAB5/mSYRfCLmWWqRKNBR/wX7CBA8G2OmmMhp8kT8A8F5W/jqx7iin1cgU2W9b/fV8kGAOgSgz1x/oNIP6PRyIyKQKk=
+  app: powerful-garden-47769
+  on:
+    repo: aamay001/reminder-app
+    branch: master
