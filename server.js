@@ -1,12 +1,9 @@
 const express = require('express');
 const config = require('./app/config');
 const constants = require('./app/constants');
-const reload = require('reload');
 
 var app = express();
 app.use(express.static('public'));
-
-reload(app);
 
 let server;
 function startServer(){
