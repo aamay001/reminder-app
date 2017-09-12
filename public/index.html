@@ -1,12 +1,73 @@
-<!<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <title></title>
+    <title>Tell Me on Date</title>
     <meta charset="UTF-8">
+    <meta description="Reminder service that allows you to send a reminder to yourself." >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Logout</a></li>
+      </ul>
+    </nav>
+    <header>
+        <h1>Tell Me on Date</h1>
+    </header>
+    <main>
+      <p class="tmo-welcome-message js-tmo-welcome-message"></p>
+      <section class="tmo-reminders-section">
+        <h2>Reminders</h2>
+        <a href="/" id="tmo-new-reminder-button">New Reminder</a>
+        <table class="tmo-reminders-table js-tmo-reminders-table">
+          <thead>
+            <th>Name</th>
+            <th>Message</th>
+            <th>Tell Me on Date</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="tmo-gen-modal js-tmo-gen-modal">
+        <h1>Login</h1>
+        <p>
+          Welcome to Tell Me on Date!<br>
+          Enter your credentials to access your dashboard.
+        </p>
+        <!-- Create New Reminder Modal Begin-->
+        <div class="tmo-create-reminder-mdc js-tmo-create-remider-mdc">
+          <form action="/reminder" method="post" id="tmo-new-reminder-form">
+            <label for="tmo-create-reminder-name">Name</label>
+            <input id="tmo-create-reminder-name" name="reminder-name" type="text" placeholder="Reminder Name" required maxlength="32">
+            <label for="tmo-create-reminder-text">Text</label>
+            <input id="tmo-create-reminder-text" name="reminder-text" type="text" placeholder="Reminder Text" required maxlength="140">
+            <label for="tmo-create-reminder-date">Date</label>
+            <input id="tmo-create-reminder-date" name="reminder-date" type="datetime-local" required>
+            <button type="sumbit">Create</button>
+          </form>
+        </div>
+        <!-- Create New Reminder Modal End-->
+
+        <!-- Login Modal Begin-->
+        <div class="tmo-login-mdc js-tmo-login-mdc">
+            <form action="/login" method="post" id="tmo-login-form">
+              <label for="tmo-login-username">User Name</label>
+              <input id="tmo-login-username" name="login-username" type="text" placeholder="User Name" required maxlength="32">
+              <label for="tmo-login-password">Password</label>
+              <input id="tmo-login-password" name="login-password" type="password" placeholder="Password" required maxlength="70">
+              <button type="sumbit">Login</button>
+            </form>
+          </div>
+        <!-- Login Modal End-->
+
+      </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="js/app.js" type="text/javascript"></script>
   </body>
 </html>
