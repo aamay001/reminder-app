@@ -6,11 +6,12 @@ chai.use(chaiHttp);
 const should = chai.should();
 
 const { app, startServer, stopServer } = require('../server');
+const config = require('../app/config');
 
 describe('Server Static Serve', function(){
 
   before(function(){
-    return startServer();
+    return startServer(config.TEST_DATABASE_URL);
   });
 
   after(function(){
