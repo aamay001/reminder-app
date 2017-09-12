@@ -1,0 +1,9 @@
+.tmo-gen-modal {
+  border: 1px solid black;
+}
+
+.tmo-reminders-section,
+.tmo-reminders-table,
+.tmo-create-reminder-mdc {
+  display: none;
+}
