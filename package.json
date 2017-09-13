@@ -2,18 +2,24 @@
   "name": "reminder-app",
   "version": "1.0.0",
   "description": "App that allows users to create and manage reminders.",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "mocha",
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "author": "Andy Amaya",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.1",
+    "dotenv": "^4.0.0",
     "express": "^4.15.4",
-    "mongoose": "^4.11.11"
+    "jsonwebtoken": "^8.0.1",
+    "mongoose": "^4.11.11",
+    "morgan": "^1.8.2",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
