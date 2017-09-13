@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 const should = chai.should();
 
-const { app, startServer, stopServer } = require('../server');
+const { app, startServer, stopServer } = require('../app');
 const config = require('../app/config');
 
 describe('Server Static Serve', function(){
