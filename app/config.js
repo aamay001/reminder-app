@@ -1,6 +1,6 @@
 'use strict';
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 const DATABASE_NAME = 'tellmeondate';
 const DATABASE_URL = process.env.DATABASE_URL || global.DATABASE_URL || `mongodb://localhost/${DATABASE_NAME}`;
 const TEST_DATABASE_URL = process.env.TEST_DATABASE_URL || 'mongodb://localhost/test-tellmeondate'
@@ -17,6 +17,8 @@ function CORS(req, res, next) {
   next();
 };
 
+const DEVELOPMENT = process.env.NODE_ENV === 'dev';
+
 module.exports = {
   PORT,
   DATABASE_NAME,
@@ -24,5 +26,6 @@ module.exports = {
   TEST_DATABASE_URL,
   TOKEN_SECRET,
   TOKEN_EXP,
-  CORS: CORS
+  CORS: CORS,
+  DEVELOPMENT
 };

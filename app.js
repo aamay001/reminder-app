@@ -2,14 +2,20 @@
 
 require('dotenv').config();
 const express = require('express');
-const morgan = require('morgan');
-const config = require('./app/config');
 var app = express();
 
+const config = require('./app/config');
 const serverController = require('./controllers/server');
 serverController.use(app);
 
-app.use(morgan('dev'));
+const {DEVELOPMENT} = config;
+if (DEVELOPMENT) {
+  const colors = require('colors');
+  console.info('DEVELOPMENT'.yellow);
+  const morgan = require('morgan');
+  app.use(morgan('dev'));
+}
+
 app.use(config.CORS);
 app.use(express.static('public'));
 
