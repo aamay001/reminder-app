@@ -21,6 +21,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
   let user;
   User.findOne({username: username})
     .then(_user => {
+      console.log(_user);
       user = _user;
       if (!user){
         return Promise.reject(INVALID_LOGIN);
@@ -31,7 +32,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
       if(!isValid){
         return Promise.reject(INVALID_LOGIN);
       }
-      callback(null, user.apiGet());
+      return callback(null, user);
     })
     .catch(err => {
       if(err.reason === INVALID_LOGIN.reason) {

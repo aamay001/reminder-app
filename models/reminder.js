@@ -15,18 +15,22 @@ const ReminderSchema = new mongoose.Schema({
     maxlength: 140
   },
   date: {
-    type: date,
+    type: Date,
     required: true
   },
   complete: {
-    type: boolean,
+    type: Boolean,
     default: false
   },
   sentDate: {
-    type: date
+    type: Date
   },
   sentConfirmation: {
     type: String
+  },
+  user_id: {
+    type: String,
+    required: true
   }
 });
 

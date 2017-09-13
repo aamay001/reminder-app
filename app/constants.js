@@ -11,6 +11,6 @@ module.exports = {
   SERVER_STOPPING: `Server is stopping.`,
   SERVER_STOP_ERROR: err => `Server stop error. Error: ${err}`.red,
   SERVER_DB_CONNECT_ERROR: err => `Database connect error. Error: ${err}`.red,
-  SERVER_DB_CONNECT_SUCCESS: `Database connect success. Connected to ${config.DATABASE_NAME}.`.green
+  SERVER_DB_CONNECT_SUCCESS: db => `Database connect success. Connected to ${db}.`.green
 };
 

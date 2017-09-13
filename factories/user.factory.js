@@ -19,7 +19,7 @@ function createOne(securePassword=true){
 
 function createMany(count, securePassword=true){
   let users = [];
-  for( let i = 0; i < count; i++){
+  for(let i = 0; i < count; i++){
     users.push(createOne(securePassword));
   }
   return users;

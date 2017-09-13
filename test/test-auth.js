@@ -1,5 +1,8 @@
 'use strict';
 
+const colors = require('colors');
+console.info('TESTING'.magenta);
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
@@ -14,9 +17,9 @@ const {User} = require('../models/user');
 const auth = require('../controllers/auth/auth');
 const testUtil = require('../utility/testutil');
 const AUTH_ENDPOINT = '/api/auth/login';
-let mockUser;
 
 describe('AUTHENTICATION', function(){
+  let mockUser;
 
   before(function(){
     return startServer(config.TEST_DATABASE_URL);
@@ -54,7 +57,7 @@ describe('AUTHENTICATION', function(){
         .post(AUTH_ENDPOINT)
         .auth(mockUser.username,mockUser.password)
         .then(res => {
-          let token = res.body.token;
+          let token = res.body.authToken;
           res.should.have.status(200);
           res.body.should.be.an('object');
           assert(typeof(token),'string');

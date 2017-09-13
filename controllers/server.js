@@ -22,7 +22,8 @@ function start(database = config.DATABASE_URL) {
         console.error(constants.SERVER_DB_CONNECT_ERROR(err));
         reject(err);
       }
-      console.log(constants.SERVER_DB_CONNECT_SUCCESS);
+      config.MONGOOSE_DB = mongoose.connections[0].name;
+      console.log(constants.SERVER_DB_CONNECT_SUCCESS(config.MONGOOSE_DB));
       _server = _app.listen(config.PORT, () => {
           console.log(constants.SERVER_START_SUCCESS);
           resolve(_server);
