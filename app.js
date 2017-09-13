@@ -8,6 +8,8 @@ const config = require('./app/config');
 const serverController = require('./controllers/server');
 serverController.use(app);
 
+const auth = require('./controllers/auth');
+
 const {DEVELOPMENT} = config;
 if (DEVELOPMENT) {
   const colors = require('colors');
@@ -16,12 +18,15 @@ if (DEVELOPMENT) {
   app.use(morgan('dev'));
 }
 
-app.use(config.CORS);
+app.use(serverController.cors);
 app.use(express.static('public'));
+auth.init(app);
 
 ///////////////////
-// Routes go here
+// Routes
 ///////////////////
+app.use('/api/auth/', auth.router);
+
 
 ///////////////////
 
@@ -30,13 +35,15 @@ app.use('*', (req, res) => {
 });
 
 if (require.main === module) {
-  serverController.start().catch(err => {
+  serverController
+    .start()
+    .catch(err => {
     console.error(err);
-  });
+    });
 }
 
 module.exports = {
   app,
-  startServer: (serverController.start),
-  stopServer: (serverController.stop)
+  startServer: serverController.start,
+  stopServer: serverController.stop
 };

@@ -26,8 +26,8 @@ const UserSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
-    unique = true,
-    required = true
+    unique: true,
+    required: true
   },
   email: {
     type: String,
@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
     minlength: 5
   },
   confirmed: {
-    type: boolean,
+    type: Boolean,
     default: false
   }
 });

@@ -2,11 +2,22 @@
 
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const authController = ('../controllers/auth.js');
+const { basic, jsonWebToken, createToken } = require('../controllers/auth/auth');
 
-router.post('/login', passport.authenticate('basic', {session:false}), (req,res) => {
+router.post('/login', (req,res,next) => {
+    basic(req,res,next)
+  },
+  (req,res) => {
+    const token = createToken(req.user);
+    return res.json({token});
+});
 
+router.post('/refresh', (req,res,next) => {
+    jsonWebToken(req,res,next);
+  },
+  (req,res) => {
+    const token = createToken(req.user);
+    return res.json({token});
 });
 
 module.exports = {router};
