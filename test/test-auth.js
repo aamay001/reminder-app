@@ -5,12 +5,16 @@ const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 const should = chai.should();
+const assert = chai.assert;
 
 const { app, startServer, stopServer } = require('../app');
 const config = require('../app/config');
 
 const {User} = require('../models/user');
+const auth = require('../controllers/auth/auth');
 const testUtil = require('../utility/testutil');
+const AUTH_ENDPOINT = '/api/auth/login';
+let mockUser;
 
 describe('AUTHENTICATION', function(){
 
@@ -23,23 +27,47 @@ describe('AUTHENTICATION', function(){
   });
 
   beforeEach(function(){
-    testUtil.seedDatabaseWithUsers();
+    return testUtil.seedDatabaseWithUser()
+      .then(user => {
+        mockUser = user;
+      });
   });
 
   afterEach(function(){
-    testUtil.dropDatabase();
+    return testUtil.dropDatabase();
   });
 
-  describe('/api/auth/login', function(){
-    it('should prevent user logon', function(){
+  describe(AUTH_ENDPOINT, function(){
+
+    it('should prevent user logon with invalid credentials', function(){
       return chai.request(app)
-        .post('/api/auth/login')
+        .post(AUTH_ENDPOINT)
         .send({username:'user1', password:'password'})
         .catch(err => {
           err.response.should.have.status(401);
           err.response.text.should.equal("Unauthorized");
         })
     });
-  });
 
+    it('should allow login and provide token', function(){
+      return chai.request(app)
+        .post(AUTH_ENDPOINT)
+        .auth(mockUser.username,mockUser.password)
+        .then(res => {
+          let token = res.body.token;
+          res.should.have.status(200);
+          res.body.should.be.an('object');
+          assert(typeof(token),'string');
+          const payload = auth.verifyToken(token);
+          payload.user.should.deep.equal({
+            username: mockUser.username,
+            firstName: mockUser.firstName,
+            lastName: mockUser.lastName,
+            email: mockUser.email,
+            phoneNumber: mockUser.phoneNumber
+          });
+        })
+    });
+
+  });
 });

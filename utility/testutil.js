@@ -4,9 +4,23 @@ const userFactory = require('../factories/user.factory');
 const mongoose = require('mongoose');
 const {User} = require('../models/user');
 
-function seedDatabaseWithUsers(){
+function seedDatabaseWithUser(){
   console.info('Seeding database with users.');
-  return User.insertMany(userFactory.createMany(5)).catch(err => console.error(err));
+  return new Promise( (resolve, reject) =>{
+    let user = userFactory.createOne(false);
+    let password = user.password;
+    user.password = User.securePassword(user.password, true);
+    User.create(user)
+      .then(user => {
+        user.password = password;
+        resolve(user);
+      })
+      .catch(err => {
+        console.error(err)
+        reject(err);
+      });
+  });
+
 }
 
 function dropDatabase(){
@@ -15,6 +29,7 @@ function dropDatabase(){
 }
 
 module.exports = {
-  seedDatabaseWithUsers,
-  dropDatabase
+  seedDatabaseWithUser,
+  dropDatabase,
+  userFactory
 }

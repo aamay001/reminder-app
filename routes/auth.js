@@ -1,21 +1,18 @@
+//////////////////////
+// AUTH ROUTER
+//////////////////////
 'use strict';
 
 const express = require('express');
 const router = express.Router();
-const { basic, jsonWebToken, createToken } = require('../controllers/auth/auth');
+const { basic, jwt, createToken } = require('../controllers/auth/auth');
 
-router.post('/login', (req,res,next) => {
-    basic(req,res,next)
-  },
-  (req,res) => {
+router.post('/login', basic, (req,res) => {
     const token = createToken(req.user);
     return res.json({token});
 });
 
-router.post('/refresh', (req,res,next) => {
-    jsonWebToken(req,res,next);
-  },
-  (req,res) => {
+router.post('/refresh', jwt, (req,res) => {
     const token = createToken(req.user);
     return res.json({token});
 });

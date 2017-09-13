@@ -3,22 +3,24 @@
 const fakes = require('faker');
 const {User} = require('../models/user');
 
-function createOne(){
+function createOne(securePassword=true){
+  let pw = fakes.internet.password(10,false);
+  pw = (securePassword ? User.securePassword(pw, true) : pw);
   return {
     username: fakes.internet.userName(),
     firstName: fakes.name.firstName(),
     lastName: fakes.name.lastName(),
-    password: User.securePassword(fakes.internet.password(10,false)),
+    password: pw,
     phoneNumber: fakes.random.number(9999999),
     email: fakes.internet.email(),
     confirmed: true
   };
 }
 
-function createMany(count){
+function createMany(count, securePassword=true){
   let users = [];
   for( let i = 0; i < count; i++){
-    users.push(createOne());
+    users.push(createOne(securePassword));
   }
   return users;
 }

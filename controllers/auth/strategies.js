@@ -1,3 +1,6 @@
+//////////////////////
+// AUTH STRATEGIES
+//////////////////////
 'use strict';
 
 const passport = require('passport');
@@ -28,18 +31,17 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
       if(!isValid){
         return Promise.reject(INVALID_LOGIN);
       }
-      callback(null, user);
+      callback(null, user.apiGet());
     })
     .catch(err => {
-      if(err.reason === 'Login Error'){
+      if(err.reason === INVALID_LOGIN.reason) {
         return callback(null,false, err);
       }
       return callback(err,false);
     })
 });
 
-const tokenStrategy = new JwtStrategy(
-  {
+const tokenStrategy = new JwtStrategy({
     secretOrKey: TOKEN_SECRET,
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     algorithms: ['HS256']
