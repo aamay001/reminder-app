@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const {schemaValidate} = require('../utility/schema-validate');
 mongoose.Promise = global.Promise;
 
 const UserSchema = new mongoose.Schema({
@@ -62,6 +63,10 @@ UserSchema.statics.securePassword = function(password, useSync=false){
     return bcrypt.hash(password,10);
 }
 
+UserSchema.statics.validateRequiredFields = schemaValidate.validateRequiredFields;
+UserSchema.statics.validateFieldTypes = schemaValidate.validateFieldTypes;
+
+schemaValidate.setSchema(UserSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {User};

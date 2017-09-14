@@ -1,5 +1,6 @@
 'use strict';
 
+const {schemaValidate} = require('../utility/schema-validate');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -42,6 +43,11 @@ ReminderSchema.methods.apiGet = function(){
     complete: this.complete
   };
 }
+
+ReminderSchema.statics.validateFieldTypes = schemaValidate.validateFieldTypes;
+ReminderSchema.statics.validateRequiredFields = schemaValidate.validateRequiredFields;
+
+schemaValidate.setSchema(ReminderSchema);
 
 const Reminders = mongoose.model('Reminders', ReminderSchema);
 

@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 let schema = new mongoose.Schema();
 
+const isValid = require('date-fns/is_valid');
+
 function setSchema(providedSchema){
   schema = providedSchema;
 }
@@ -12,6 +14,13 @@ function setSchema(providedSchema){
 // exists in the request body.
 function validateRequiredFields(requestBody) {
   return new Promise( (resolve, reject) => {
+    if(!requestBody){
+      return reject({
+        ok: false,
+        message: 'Object missing. Empty body.'
+      });
+    }
+
     const requiredFields = Object.keys(schema.obj).filter( property => {
       return Object.keys(schema.obj[property]).includes('required');
     });
@@ -25,8 +34,7 @@ function validateRequiredFields(requestBody) {
     }
     else {
       return resolve({
-        ok: true,
-        data: requestBody
+        ok: true
       });
     }
   });
@@ -37,7 +45,12 @@ function validateRequiredFields(requestBody) {
 function validateFieldTypes(requestBody) {
   return new Promise( (resolve, reject) => {
     const badTypes = Object.keys(requestBody).find( key => {
-      return !( typeof(requestBody[key]) === schema.paths[key].instance.toLowerCase())
+      if (schema.paths[key].instance === 'Date'){
+        console.log(requestBody[key]);
+        return !isValid(new Date(requestBody[key]));
+      }
+
+      return !( typeof(requestBody[key]) === (schema.paths[key].instance.toLowerCase()));
     });
     if(badTypes){
       return reject({
@@ -48,8 +61,7 @@ function validateFieldTypes(requestBody) {
     }
     else {
       return resolve({
-        ok: true,
-        data: requestBody
+        ok: true
       });
     }
   });

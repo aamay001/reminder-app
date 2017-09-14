@@ -42,8 +42,6 @@ auth.init(app);
 ///////////////////
 app.use('/api/auth/', auth.router);
 app.use('/api/reminder/', remindersRouter );
-
-
 ///////////////////
 
 app.use('*', (req, res) => {

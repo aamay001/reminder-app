@@ -18,7 +18,7 @@ const auth = require('../controllers/auth/auth');
 const testUtil = require('../utility/testutil');
 const AUTH_ENDPOINT = '/api/auth/login';
 
-describe('AUTHENTICATION', function(){
+describe('AUTHENTICATION'.cyan, function(){
   let mockUser;
 
   before(function(){
@@ -69,6 +69,25 @@ describe('AUTHENTICATION', function(){
             email: mockUser.email,
             phoneNumber: mockUser.phoneNumber
           });
+        })
+    });
+
+    it('should authenticate with jwt', function(){
+      return chai.request(app)
+        .post(AUTH_ENDPOINT)
+        .auth(mockUser.username, mockUser.password)
+        .then(res => {
+          let token = res.body.authToken;
+          res.should.have.status(200);
+          res.body.should.be.an('object');
+          assert(typeof(token),'string');
+          return chai.request(app)
+            .get('/api/reminder')
+            .set('Authorization', `Bearer ${token}`)
+            .then(res => {
+              res.should.have.status(200);
+              res.body.should.be.an('array');
+            });
         })
     });
 
