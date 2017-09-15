@@ -1,5 +1,6 @@
 'use strict';
 
+const {schemaValidate} = require('../utility/schema-validate');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -15,18 +16,22 @@ const ReminderSchema = new mongoose.Schema({
     maxlength: 140
   },
   date: {
-    type: date,
+    type: Date,
     required: true
   },
   complete: {
-    type: boolean,
+    type: Boolean,
     default: false
   },
   sentDate: {
-    type: date
+    type: Date
   },
   sentConfirmation: {
     type: String
+  },
+  user_id: {
+    type: String,
+    required: true
   }
 });
 
@@ -38,6 +43,11 @@ ReminderSchema.methods.apiGet = function(){
     complete: this.complete
   };
 }
+
+ReminderSchema.statics.validateFieldTypes = schemaValidate.validateFieldTypes;
+ReminderSchema.statics.validateRequiredFields = schemaValidate.validateRequiredFields;
+
+schemaValidate.setSchema(ReminderSchema);
 
 const Reminders = mongoose.model('Reminders', ReminderSchema);
 

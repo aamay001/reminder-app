@@ -1,3 +1,6 @@
+//////////////////////
+// SERVER CONTROLLER
+//////////////////////
 'use strict';
 
 const config = require('../app/config');
@@ -19,7 +22,8 @@ function start(database = config.DATABASE_URL) {
         console.error(constants.SERVER_DB_CONNECT_ERROR(err));
         reject(err);
       }
-      console.log(constants.SERVER_DB_CONNECT_SUCCESS);
+      config.MONGOOSE_DB = mongoose.connections[0].name;
+      console.log(constants.SERVER_DB_CONNECT_SUCCESS(config.MONGOOSE_DB));
       _server = _app.listen(config.PORT, () => {
           console.log(constants.SERVER_START_SUCCESS);
           resolve(_server);
@@ -48,4 +52,14 @@ function stop() {
   });
 }
 
-module.exports = {stop, start, use};
+function cors(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+      return res.send(204);
+  }
+  next();
+};
+
+module.exports = {stop, start, use, cors};

@@ -18,7 +18,7 @@ describe('Server Static Serve', function(){
     return stopServer();
   });
 
-  it('should server a static index.html page', function(){
+  it('should serve a static index.html page', function(){
     return chai.request(app)
       .get('/')
       .then(function(res){

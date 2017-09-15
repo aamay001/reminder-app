@@ -2,21 +2,47 @@
 
 require('dotenv').config();
 const express = require('express');
-const morgan = require('morgan');
-const config = require('./app/config');
 var app = express();
+const dispatcher = require('./service/dispatcher.service');
 
+const config = require('./app/config');
 const serverController = require('./controllers/server');
 serverController.use(app);
 
-app.use(morgan('dev'));
-app.use(config.CORS);
+const auth = require('./controllers/auth');
+const remindersRouter = require('./routes/reminder');
+
+const {DEVELOPMENT} = config;
+if (DEVELOPMENT) {
+  const colors = require('colors');
+  console.info('DEVELOPMENT'.yellow);
+  const morgan = require('morgan');
+  app.use(morgan('dev'));
+}
+
+app.use(serverController.cors);
 app.use(express.static('public'));
+auth.init(app);
+
+////////////////////////////////////////
+// Manual DB population.
+// let {User} = require('./models/user');
+// let user = require('./factories/user.factory').createOne(false);
+// console.info(user);
+// user.password = User.securePassword(user.password,true);
+// User.create(user)
+// .then(newUser => {
+//   let reminder = require('./factories/reminder.factory');
+//   let r  = reminder.createMany(10, newUser._id.toString());
+//   let {Reminders} = require('./models/reminder');
+//   Reminders.insertMany(r);
+// });
 
 ///////////////////
-// Routes go here
+// Routes
 ///////////////////
-
+app.use('/api/auth/', auth.router);
+app.use('/api/reminder/', remindersRouter );
 ///////////////////
 
 app.use('*', (req, res) => {
@@ -24,13 +50,18 @@ app.use('*', (req, res) => {
 });
 
 if (require.main === module) {
-  serverController.start().catch(err => {
-    console.error(err);
-  });
+  serverController
+    .start()
+    .then(() => {
+      dispatcher.start();
+    })
+    .catch(err => {
+      console.error(err);
+    });
 }
 
 module.exports = {
   app,
-  startServer: (serverController.start),
-  stopServer: (serverController.stop)
+  startServer: serverController.start,
+  stopServer: serverController.stop
 };

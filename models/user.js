@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const {schemaValidate} = require('../utility/schema-validate');
 mongoose.Promise = global.Promise;
 
 const UserSchema = new mongoose.Schema({
@@ -25,9 +26,9 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   phoneNumber: {
-    type: Number,
-    unique = true,
-    required = true
+    type: String,
+    unique: true,
+    required: true
   },
   email: {
     type: String,
@@ -36,7 +37,7 @@ const UserSchema = new mongoose.Schema({
     minlength: 5
   },
   confirmed: {
-    type: boolean,
+    type: Boolean,
     default: false
   }
 });
@@ -55,10 +56,17 @@ UserSchema.methods.validatePassword = function(password){
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.statics.securePassword = function(password){
-  return bcrypt.hash(password, 11);
+UserSchema.statics.securePassword = function(password, useSync=false){
+  if(useSync)
+    return bcrypt.hashSync(password, 10);
+  else
+    return bcrypt.hash(password,10);
 }
 
+UserSchema.statics.validateRequiredFields = schemaValidate.validateRequiredFields;
+UserSchema.statics.validateFieldTypes = schemaValidate.validateFieldTypes;
+
+schemaValidate.setSchema(UserSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {User};
