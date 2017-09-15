@@ -12,7 +12,8 @@ const {TOKEN_SECRET} = require('../../app/config');
 const INVALID_LOGIN = {
   ok: false,
   reason: "Login Error",
-  message: "Incorrect username or password."
+  message: "Incorrect username or password.",
+  status: 401
 };
 
 // Basic Authentication Strategy
@@ -23,21 +24,19 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
     .then(_user => {
       user = _user;
       if (!user){
-        return Promise.reject(INVALID_LOGIN);
+        return callback(null, INVALID_LOGIN);
       }
       return user.validatePassword(password);
     })
     .then(isValid => {
       if(!isValid){
-        return Promise.reject(INVALID_LOGIN);
+        return callback(null, INVALID_LOGIN);
       }
+      user.ok = true;
       return callback(null, user);
     })
     .catch(err => {
-      if(err.reason === INVALID_LOGIN.reason) {
-        return callback(null,false, err);
-      }
-      return callback(err,false);
+      return callback(err, false);
     })
 });
 

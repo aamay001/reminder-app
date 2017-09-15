@@ -11,7 +11,7 @@ function createOne(securePassword=true){
     firstName: fakes.name.firstName(),
     lastName: fakes.name.lastName(),
     password: pw,
-    phoneNumber: fakes.random.number(9999999),
+    phoneNumber: fakes.random.number(9999999).toString(),
     email: fakes.internet.email(),
     confirmed: true
   };

@@ -3,6 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 var app = express();
+const dispatcher = require('./service/dispatcher.service');
 
 const config = require('./app/config');
 const serverController = require('./controllers/server');
@@ -51,8 +52,11 @@ app.use('*', (req, res) => {
 if (require.main === module) {
   serverController
     .start()
+    .then(() => {
+      dispatcher.start();
+    })
     .catch(err => {
-    console.error(err);
+      console.error(err);
     });
 }
 
