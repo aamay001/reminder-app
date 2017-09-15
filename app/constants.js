@@ -1,9 +1,5 @@
 const config = require('./config');
-
-const {DEVELOPMENT} = config;
-if (DEVELOPMENT) {
-  const colors = require('colors');
-}
+const colors = require('colors');
 
 module.exports = {
   SERVER_START_SUCCESS: `Server start success. Server is listening on port ${config.PORT}.`.green,
