@@ -229,11 +229,12 @@ let tmdMessageAppend = '';
 function setWelcomeMessage(user, append=tmdMessageAppend){
   let message = `Welcome${append},  ${user}! Let me tell you something later!`;
   $(TMD_HTML.welcomeMessage).text(message);
+  $(TMD_HTML.welcomeMessage).show();
 };
 
 function changeModalVisibility(options){
   if (options.show){
-    $(TMD_HTML.modal.it).show();
+    $(TMD_HTML.modal.it).fadeIn();
   }
   else{
     $(TMD_HTML.modal.it).hide();
