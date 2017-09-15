@@ -15,7 +15,6 @@ const createReminder = (req, res) => {
         .then( (typeValidation) => {
           let reminderDate = Date.parse(req.body.date);
           let timeToDispatch = distanceInWordsStrict(reminderDate, new Date(), {unit:'m'}).replace('minutes', '');
-          console.log(timeToDispatch);
           if (parseInt(timeToDispatch) < 9){
             return Promise.reject("Reminder must be at least 10 minutes in the future.");
           }
