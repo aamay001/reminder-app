@@ -11,6 +11,7 @@ serverController.use(app);
 
 const auth = require('./controllers/auth');
 const remindersRouter = require('./routes/reminder');
+const userRouter = require('./routes/user');
 
 const {DEVELOPMENT} = config;
 if (DEVELOPMENT) {
@@ -43,6 +44,7 @@ auth.init(app);
 ///////////////////
 app.use('/api/auth/', auth.router);
 app.use('/api/reminder/', remindersRouter );
+app.use('/user', userRouter);
 ///////////////////
 
 app.use('*', (req, res) => {

@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('../app/config');
 const twilio = require('./twilio.service');
 const {User} = require('../models/user');
 const {Reminders} = require('../models/reminder');
@@ -20,12 +21,12 @@ function start(){
 }
 
 function resetInterval(){
-  TIMER = setInterval(getAndCheck, POLLING_INTERVAL);
+  TIMER = setTimeout(getAndCheck, POLLING_INTERVAL);
 }
 
 function stop(){
   if(TIMER){
-    clearInterval(TIMER);
+    clearTimeout(TIMER);
     STOP_REQUESTED = true;
     console.log('Dispatcher stop requested.');
   }
@@ -36,7 +37,7 @@ function stop(){
 
 function getAndCheck(){
   if(TIMER){
-    clearInterval(TIMER);
+    clearTimeout(TIMER);
   }
   console.log('Dispatcher running.');
   REMINDER_DATE_THRESHOLD = endOfToday();
@@ -87,16 +88,27 @@ function checkForDispatchable(reminders){
 function dispatch(reminder){
   return User.findOne({_id: reminder.user_id})
     .then(user => {
-      return twilio.sendSMS(reminder.text, user.phoneNumber)
-        .then(message => {
-          reminder.complete = true,
-          reminder.sentDate = new Date().toISOString();
-          reminder.sentConfirmation = message.sid;
-          return Reminders.findByIdAndUpdate(reminder._id, reminder)
-            .then(updatedReminder => {
-              return updatedReminder;
-            });
-        })
+      if(config.PRODUCTION){
+        return twilio.sendSMS(reminder.text, user.phoneNumber)
+          .then(message => {
+            reminder.complete = true,
+            reminder.sentDate = new Date().toISOString();
+            reminder.sentConfirmation = message.sid;
+            return Reminders.findByIdAndUpdate(reminder._id, reminder)
+              .then(updatedReminder => {
+                return updatedReminder;
+              });
+          })
+      }
+      else{
+        reminder.complete = true,
+        reminder.sentDate = new Date().toISOString();
+        reminder.sentConfirmation = config.DEVELOPMENT;
+        return Reminders.findByIdAndUpdate(reminder._id, reminder)
+          .then(updatedReminder => {
+            return updatedReminder;
+          });
+      }
     })
     .catch(err => {
       console.log(err);

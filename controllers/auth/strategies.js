@@ -23,7 +23,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
   User.findOne({username: username})
     .then(_user => {
       user = _user;
-      if (!user){
+      if (!user) {
         return callback(null, INVALID_LOGIN);
       }
       return user.validatePassword(password);

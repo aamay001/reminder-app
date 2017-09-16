@@ -39,7 +39,9 @@ const createReminder = (req, res) => {
 const getReminders = (req, res) => {
   getUserId(req)
   .then(userId => {
-    return Reminders.find({user_id: userId});
+    return Reminders
+      .find({user_id: userId})
+      .sort({date: "desc" });
   })
   .then(reminders => {
     reminders = reminders.map(e=>e.apiGet());

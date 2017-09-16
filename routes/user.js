@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 router.get('/', (req, res) =>{
-  res.status(200).json({message:"works"});
+  res.status(200).json({message:"nothing to see here!"});
 });
 
-module.exports = { userRouter: router };
+module.exports = router;
