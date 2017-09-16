@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/3fa5c82c66.css">
     <link href="css/style.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
@@ -35,13 +36,19 @@
         <li><a id="tmd-logout-button" href="/">Logout</a></li>
       </ul>
     </nav>
-    <header>
-        <h1>Tell Me on Date</h1>
-    </header>
     <main>
+      <section class="tmd-splash js-tmd-splash">
+        <h1>Welcome to Tell Me on Date!</h1>
+        <p>Tell Me on Date is a reminder application. After you sign up for an account, Tell Me on Date
+          can currently send you a reminder via SMS (Text Message). Click the login button below login or,
+          click the create account button to register for an account.
+        </p>
+        <button data-type="login">Login</button>
+        <button data-type="register">Create Account</button>
+      </section>
       <p class="tmd-welcome-message js-tmd-welcome-message"></p>
       <div class="tmd-gen-modal js-tmd-gen-modal">
-          <h1></h1>
+          <h2></h2>
           <p></p>
           <!-- Create New Reminder Modal Begin-->
           <div class="tmd-create-reminder-mdc js-tmd-create-remider-mdc">
@@ -52,8 +59,9 @@
               <input id="tmd-create-reminder-text" name="reminder-text" type="text" placeholder="Reminder Text" required maxlength="140" minlength="5">
               <label for="tmd-create-reminder-date">Date</label>
               <input id="tmd-create-reminder-date" name="reminder-date" type="datetime-local" required>
-              <button type="sumbit">Create</button>
+              <button type="submit">Create</button>
             </form>
+            <button type="cancel" id="tmd-cancel-reminder">Cancel</button>
           </div>
           <!-- Create New Reminder Modal End-->
 
@@ -61,28 +69,51 @@
           <div class="tmd-login-mdc js-tmd-login-mdc">
               <form action="/api/auth/login" method="post" id="tmd-login-form">
                 <label for="tmd-login-username">User Name</label>
-                <input id="tmd-login-username" name="login-username" type="text" placeholder="User Name" required maxlength="32" minlength="4">
+                <input id="tmd-login-username" name="login-username" type="text" placeholder="User Name" required maxlength="32" minlength="4" autofocus>
                 <label for="tmd-login-password">Password</label>
                 <input id="tmd-login-password" name="login-password" type="password" placeholder="Password" required maxlength="70" minlength="8">
-                <button id="tmd-login-submit" type="sumbit">Login</button>
+                <button id="tmd-login-submit" type="submit" tabindex="3">Login</button>
               </form>
             </div>
           <!-- Login Modal End-->
 
+          <!-- Registration Modal Begin-->
+          <div class="tmd-register-mdc js-tmd-register-mdc">
+              <form action="/api/user" method="post" id="tmd-register-form">
+                <label for="tmd-register-username">User Name</label>
+                <input id="tmd-register-username" name="register-firstname" type="text" placeholder="User Name" required maxlength="32" minlength="4" autofocus>
+
+                <label for="tmd-register-firstname">First Name</label>
+                <input id="tmd-register-firstname" name="register-firstname" type="text" placeholder="First Name" required maxlength="64" minlength="2" >
+
+                <label for="tmd-register-lastname">Last Name</label>
+                <input id="tmd-register-lastname" name="register-lastname" type="text" placeholder="Last Name" required maxlength="64" minlength="2" >
+
+                <label for="tmd-register-phone">Mobile Phone Number</label>
+                <input id="tmd-register-phone" name="register-phone" type="tel" placeholder="Mobile Phone Number" required maxlength="15" minlength="10" >
+
+                <label for="tmd-register-email">Email</label>
+                <input id="tmd-register-email" name="register-email" type="email" placeholder="Email Address" required minlength="10" >
+
+                <label for="tmd-register-password">Password</label>
+                <input id="tmd-register-password" name="register-password" type="password" placeholder="Password" required maxlength="70" minlength="8">
+
+                <label for="tmd-register-password-confirm">Confirm Password</label>
+                <input id="tmd-register-password-confirm" name="register-password-confirm" type="password" placeholder="Confirm Password" required maxlength="70" minlength="8">
+
+                <button id="tmd-register-submit" type="submit" tabindex="3">Register</button>
+              </form>
+            </div>
+          <!-- Registration Modal End-->
+
         </div>
       <section class="tmd-reminders-section">
-        <h2>Reminders</h2>
-        <a href="/" id="tmd-new-reminder-button">New Reminder</a>
-        <table class="tmd-reminders-table js-tmd-reminders-table">
-          <thead>
-            <th>Name</th>
-            <th>Message</th>
-            <th>Tell Me on Date</th>
-            <th>Status</th>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+        <div>
+          <h2>Reminders</h2>
+          <a href="/" id="tmd-new-reminder-button">New Reminder</a>
+        </div>
+        <div class="tmd-reminders-table js-tmd-reminders-table">
+        </div>
       </section>
     </main>
     <footer>

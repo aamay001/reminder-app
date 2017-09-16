@@ -3,29 +3,40 @@
 const TMD_HTML = {
   welcomeMessage: '.js-tmd-welcome-message',
   remindersSection: '.tmd-reminders-section',
+  splashScreen: {
+    it: '.tmd-splash',
+    loginButton: 'button[data-type="login"]',
+    registerButton: 'button[data-type="register"]'
+  },
   remindersTable: {
     it: '.js-tmd-reminders-table',
-    body: '.js-tmd-reminders-table tbody'
+    body: '.js-tmd-reminders-table'
   },
   modal: {
     it: '.js-tmd-gen-modal',
-    header: '.js-tmd-gen-modal h1',
+    header: '.js-tmd-gen-modal h2',
     message: '.js-tmd-gen-modal p',
     content: {
       login: '.js-tmd-login-mdc',
-      newReminder: '.js-tmd-create-remider-mdc'
+      newReminder: '.js-tmd-create-remider-mdc',
+      registration: '.js-tmd-register-mdc'
     }
   },
   forms: {
     login: {
       it: '#tmd-login-form',
-      submitButton: '#tmd-login-submit',
       username: '#tmd-login-username',
       password: '#tmd-login-password'
     },
     newReminder: {
       it: '#tmd-new-reminder-form',
-      dateField: '#tmd-create-reminder-date'
+      dateField: '#tmd-create-reminder-date',
+      cancelReminderButton: '#tmd-cancel-reminder'
+    },
+    registration: {
+      it: '#tmd-register-form',
+      password: '#tmd-register-password',
+      passwordConfirm: '#tmd-register-password-confirm'
     }
   },
   newReminderButton: '#tmd-new-reminder-button',
@@ -60,7 +71,15 @@ const MODAL_VISIBILITY = {
     login: false,
     create: true,
     header: 'New Reminder',
-    message: 'Enter the details for your new reminder below.'
+    message: 'Enter the details for your new reminder:'
+  },
+  SHOW_REGISTRATION: {
+    show: true,
+    login: false,
+    create: false,
+    register: true,
+    header: 'User Registration',
+    message: 'Please enter your information below. After you submit, you\ll be required to confirm your phone number so make sure you have it near by.'
   }
 }
 
@@ -73,18 +92,47 @@ function onReady(){
 }
 
 function bindUserInput(){
-  $(TMD_HTML.forms.login.submitButton).on('click', onLoginFormSubmit );
-  $(TMD_HTML.forms.login).on('submit', prevDef );
+  $(TMD_HTML.forms.login.it).on('submit', onLoginFormSubmit );
   $(TMD_HTML.forms.newReminder.it).on('submit', onNewReminderSubmit );
+  $(TMD_HTML.forms.newReminder.cancelReminderButton).on('click', onCancelReminderClick);
   $(TMD_HTML.newReminderButton).on('click', onNewReminderClick );
   $(TMD_HTML.logoutButton).on('click', logout);
+  $(TMD_HTML.splashScreen.loginButton).on('click', showLogin);
+  $(TMD_HTML.splashScreen.registerButton).on('click', showRegistration);
+  $(TMD_HTML.forms.registration.it).on('submit', onSubmitRegistration);
+}
+
+/////////////////////////
+// USER REGISTRATION
+/////////////////////////
+function onSubmitRegistration(event){
+  prevDef(event);
+  if (!$(TMD_HTML.forms.registration.it)[0].checkValidity()) {
+    return;
+  }
+  else if ($(TMD_HTML.forms.registration.password).val() ===
+    $(TMD_HTML.forms.registration.passwordConfirm).val()) {
+      alert('Password does not match confirmation password.');
+      return;
+  }
+
+  //registerUser();
+}
+
+function registerUser(){
+  return new Promise((resolve, reject) => {
+    resolve();
+  });
 }
 
 /////////////////////////
 // USER LOGIN
 /////////////////////////
 function onLoginFormSubmit(event){
-  event.preventDefault();
+  if (!$(TMD_HTML.forms.login.it)[0].checkValidity()){
+    return;
+  }
+  prevDef(event);
   loginUser()
     .then(() => {
       return getReminders();
@@ -106,7 +154,8 @@ function loginUser(){
         loginSuccess(res.authToken);
       },
       error: res => {
-        alert(res.responseJSON.message);
+        let message = (res.responseJSON ? res.responseJSON.message : res.responseText );
+        alert(message);
       }
     });
 }
@@ -116,6 +165,7 @@ function loginSuccess(token){
   document.getElementById(TMD_HTML.forms.login.it.replace('#','')).reset();
   localStorage.setItem('username', TMD_API.username);
   localStorage.setItem('authToken', token);
+  $(TMD_HTML.logoutButton).parent().css('display', 'inline-block');
   setWelcomeMessage(TMD_API.username);
 }
 
@@ -133,7 +183,7 @@ function tryAutoLogin(){
         changeModalVisibility(MODAL_VISIBILITY.SHOW_LOGIN);
       })
   } else {
-    changeModalVisibility(MODAL_VISIBILITY.SHOW_LOGIN);
+    changeModalVisibility({});
   }
 }
 
@@ -150,18 +200,21 @@ function getReminders(){
       }, '');
       $(TMD_HTML.remindersTable.body).append(htmlString);
       $(TMD_HTML.remindersTable.it).show();
+      $(TMD_HTML.splashScreen.it).hide();
+      $('html').css('background-image', 'none');
     }
   });
 }
 
 function getReminderHtml(reminder){
   const _html =
-  `<tr>
-    <td>${reminder.name}</td>
-    <td>${reminder.text}</td>
-    <td>${getFormattedDate(reminder.date)}</td>
-    <td>${(reminder.complete ? 'Sent' : 'Pending')}</td>
-  </tr>`;
+  `<div class="tmd-reminder-card">
+    <p class="tmd-reminder-card-date">${getFormattedDate(reminder.date)}</p>
+    <h3>${reminder.name}</h3>
+    <p class="tmd-reminders-card-text">${reminder.text}</p>
+    <p class="tmd-reminder-status">${(reminder.complete ? '<span><sub>Sent</sub><i title="Status sent." class="fa fa-check fa-2x" aria-hidden="true"></i></span>' :
+    '<span><sub>Pending</sub><i title="Status pending." class="fa fa-clock-o fa-2x" aria-hidden="true"></i></span>')}</p>
+  </div>`;
   return _html;
 }
 
@@ -170,8 +223,14 @@ function getReminderHtml(reminder){
 /////////////////////////
 function onNewReminderClick(event){
   prevDef(event);
-  $(TMD_HTML.forms.newReminder.dateField).val(updateMinDate());
+  let currentTime = updateMinDate();
+  $(TMD_HTML.forms.newReminder.dateField).val(currentTime);
   changeModalVisibility(MODAL_VISIBILITY.SHOW_REMINDER);
+}
+
+function onCancelReminderClick(event){
+  prevDef(event);
+  changeModalVisibility({});
 }
 
 function onNewReminderSubmit(event){
@@ -227,8 +286,8 @@ function getFormattedDate(dt){
 
 let tmdMessageAppend = '';
 function setWelcomeMessage(user, append=tmdMessageAppend){
-  let message = `Welcome${append},  ${user}! Let me tell you something later!`;
-  $(TMD_HTML.welcomeMessage).text(message);
+  let message = `Welcome${append},  ${user}!<br>Let me tell you something later!`;
+  $(TMD_HTML.welcomeMessage).html(message);
   $(TMD_HTML.welcomeMessage).show();
 };
 
@@ -239,25 +298,46 @@ function changeModalVisibility(options){
   else{
     $(TMD_HTML.modal.it).hide();
   }
+
   if (options.login){
     $(TMD_HTML.modal.content.login).show();
+    $(TMD_HTML.splashScreen.it).hide();
   }
   else{
     $(TMD_HTML.modal.content.login).hide();
   }
+
   if (options.create){
     $(TMD_HTML.modal.content.newReminder).show();
   }
   else{
     $(TMD_HTML.modal.content.newReminder).hide();
   }
+
+  if(options.register){
+    $(TMD_HTML.modal.content.registration).show();
+    $(TMD_HTML.splashScreen.it).hide();
+  }
+  else{
+    $(TMD_HTML.modal.content.registration).hide();
+  }
+
   if (options.header){
     $(TMD_HTML.modal.header).text(options.header);
   }
+
   if (options.message){
     let m = options.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
     $(TMD_HTML.modal.message).html(m);
   }
+}
+
+function showLogin(){
+  changeModalVisibility(MODAL_VISIBILITY.SHOW_LOGIN);
+}
+
+function showRegistration(){
+  changeModalVisibility(MODAL_VISIBILITY.SHOW_REGISTRATION);
 }
 
 function getAuthHeader(type){
@@ -297,7 +377,7 @@ function updateMinDate(){
   let now = dateFns.addMinutes(new Date(), 10);
   now = `${now.getFullYear()}-` +
         `${now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1}-` +
-        `${now.getDate()}T${now.getHours()}:` +
+        `${now.getDate()}T${now.getHours() < 10 ? '0' + now.getHours() : now.getHours()}:` +
         `${now.getMinutes() < 10 ? '0' + now.getMinutes():now.getMinutes()}`;
   $(TMD_HTML.forms.newReminder.dateField).attr('min', now);
   return now;
