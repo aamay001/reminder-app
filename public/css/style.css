@@ -146,6 +146,14 @@ input {
   margin-top: .5vh;
   margin-bottom: 2vh;
   font-size: 2vh;
+  border: none;
+  border-bottom: .25vh solid #173165;
+  outline: none;
+}
+
+label{
+  color: #173165;
+  font-weight: bold;
 }
 
 button,

@@ -110,13 +110,12 @@ function onSubmitRegistration(event){
   if (!$(TMD_HTML.forms.registration.it)[0].checkValidity()) {
     return;
   }
-  else if ($(TMD_HTML.forms.registration.password).val() ===
+  if ($(TMD_HTML.forms.registration.password).val() !==
     $(TMD_HTML.forms.registration.passwordConfirm).val()) {
       alert('Password does not match confirmation password.');
       return;
   }
-
-  //registerUser();
+    //registerUser();
 }
 
 function registerUser(){
