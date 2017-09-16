@@ -1,9 +1,17 @@
-* {
+*:not(.fa) {
   font-family: 'Work Sans', sans-serif !important;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 2.5vh;
+}
+
+html {
+  background-image: url('../bg.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #F4F3EB;
+  background-size: 100vw 100vh;
 }
 
 a {
@@ -16,11 +24,13 @@ a:visited {
 }
 
 html, body {
-  min-width: 425px;
+  min-height: 100%;
+  max-height: 100%;
+  height: 100%;
 }
 
 nav {
-  width: 100vw;
+  width: 100%;
   background-color: #173165;
   height: 8vh;
   position: fixed;
@@ -35,16 +45,15 @@ nav > a > img {
 }
 
 nav > h1 {
-  display: inline-block;
   padding-top: 2.15vh;
-  margin-left: 7vh;
+  margin-left: 8vh;
   display: block;
   color: #ffffff;
-  font-size: 3vh;
+  font-size: 3vh !important;
   position: fixed;
 }
 
-nav > ul{
+nav > ul {
   height: 8vh;
   float: right;
 }
@@ -66,29 +75,34 @@ nav > ul > li > a {
 }
 
 nav li a:hover {
-  background-color: #000000;
+  background-color: #474545;
+}
+
+@media only screen and (max-width: 465px){
+  nav > h1 {
+    font-size: 2.1vh;
+    padding-top: 2.7vh;
+  }
+
+  nav > ul > li > a {
+    font-size: 2.0vh;
+    padding-top: 2.6vh;
+  }
 }
 
 header, main {
-  margin-left: 3.5vw;
-  margin-right: 3.5vw;
-}
-
-header {
-  background-color: white;
-  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.25),
-              1px 1px 1px 1px rgba(0,0,0,0.22);
-  padding: 1.5vh 1.5vw .05vh 1.5vw;
-  margin-top: 9vh;
-  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }
 
 main {
-  margin-top: 2vh;
+  margin-top: 9vh;
+  font-size: 2vh;
 }
 
 main h1, header h1 {
-  font-size: 4vh;
+  font-size: 3vh ! important;
   font-weight: bold;
   margin-bottom: 1.5vh;
 }
@@ -96,24 +110,29 @@ main h1, header h1 {
 main h2 {
   font-size: 3vh;
   font-weight: bold;
+  margin-bottom: 1vh;
 }
 
 .tmd-reminders-section,
 .tmd-reminders-table,
 .tmd-create-reminder-mdc,
 .tmd-gen-modal,
-.tmd-welcome-message {
+.tmd-welcome-message,
+.tmd-register-mdc,
+nav > ul > li:last-of-type{
   display: none;
 }
 
-.tmd-gen-modal,
-.tmd-welcome-message,
-.tmd-reminders-section  {
+.tmd-welcome-message {
   margin-bottom: 1vh;
   background-color: white;
-  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.25),
-              1px 1px 1px 1px rgba(0,0,0,0.22);
   padding: 1.5vh 2.5vw 2vh 2.5vw;
+}
+
+.tmd-gen-modal{
+  margin-bottom: 10vh;
+  padding: 1.5vh 4vw 2vh 4vw;
+  background-color: white;
 }
 
 form {
@@ -123,9 +142,55 @@ form {
 input {
   display: block;
   width: 100%;
-  height: 5vh;
+  height: 6vh;
   margin-top: .5vh;
   margin-bottom: 2vh;
+  font-size: 2vh;
+}
+
+button,
+#tmd-new-reminder-button {
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  top: 5px;
+  display: block;
+  width: 90%;
+  height: 5vh;
+  background-color: #173165;
+  color: #ffffff;
+  border:none;
+  margin-top: 5vh;
+  font-size: 2vh;
+}
+
+button:active,
+#tmd-new-reminder-button:active {
+  box-shadow: none;
+}
+
+button[type="cancel"],
+button[data-type="register"],
+button[data-type="login"]{
+  margin-top: 1.5vh;
+  margin-bottom: 1.5vh;
+  width: 88%;
+}
+
+#tmd-new-reminder-button {
+  display: block;
+  width: 35vw;
+  margin-top: 0;
+  text-align: center;
+  padding-top: 1.5vh;
+  margin-bottom: 0vh;
+  float: right;
+}
+
+
+
+.tmd-reminders-section{
+  margin-bottom: 10vh;
 }
 
 footer {
@@ -135,11 +200,99 @@ footer {
   background-color: #173165;
   height: 6vh;
   position: fixed;
-  bottom: 0;
+  bottom: 0vh;;
   color: #ffffff;
   padding-top: 2vh;
   padding-left: 3vw;
 }
+
+header,
+.tmd-gen-modal,
+.tmd-welcome-message,
+#tmd-new-reminder-button,
+.tmd-reminder-card,
+.tmd-splash,
+button {
+  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.25),
+  1px 1px 1px 1px rgba(0,0,0,0.22);
+}
+
+.tmd-splash {
+  background-color:rgba(255, 255, 255, 0.95);
+  margin: 15vh auto 1vh auto;
+  padding: 3vh 3vw 3vh 3vw;
+  width: 90%;
+  text-align: center;
+}
+
+.tmd-splash p {
+  padding: 1vh 2vw 1vh 2vw;
+}
+
+.tmd-reminders-section > div > h2 {
+  display: inline-block;
+  margin-top: 3vh;
+  font-size: 3vh;
+  margin-bottom: 0;
+}
+
+.tmd-reminders-section div {
+  width: 100%;
+  padding: 1vh 2vw 1vh 2vw;
+  overflow: auto;
+}
+
+.tmd-reminders-table {
+  width: 100%;
+  margin-bottom: 3vh;
+}
+
+.tmd-reminder-card{
+  margin-bottom: 1vh;
+  background-color: white;
+}
+
+.tmd-reminder-card h3 {
+  font-size: 2vh;
+  color: #474545;
+  margin-bottom: 5px;
+}
+
+.tmd-reminder-card-date {
+  float:right;
+  color: #474545;
+  font-size: 2vh;
+}
+
+.tmd-reminders-card-text{
+  font-size: 2vh;
+  margin-top: 1.5vh;
+}
+
+i.fa-check{
+  color: green;
+}
+
+i.fa-clock-o{
+  color: gold;
+}
+
+.fa-2x{
+  float: right;
+}
+
+sub {
+  font-size: 1.5vh !important;
+  display: inline-block;
+  margin-right: 1vw;
+  padding-top: 1.5vh;
+}
+
+.tmd-reminder-status{
+  text-align: right;
+}
+
+
 
 
 
