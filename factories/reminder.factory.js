@@ -7,10 +7,10 @@ function createOne(user){
   return {
     name: fakes.random.words(3),
     text: fakes.lorem.sentences(1),
-    date: fakes.date.future(),
+    date: fakes.date.past(),
     complete: false,
     sentDate: null,
-    sentConfirmation: null,
+    sentConfirmation: '',
     user_id: user
   };
 }
