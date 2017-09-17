@@ -282,6 +282,10 @@ sub {
   text-align: right;
 }
 
+.tmd-reminders-section {
+  margin-bottom: 75px;
+}
+
 /* Larger Screens */
 @media only screen and (min-width: 769px){
   .tmd-splash,
