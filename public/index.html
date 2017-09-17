@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Tell Me on Date</title>
+    <title>TellMeonDate</title>
     <meta charset="UTF-8">
     <meta description="Reminder service that allows you to send a reminder to yourself." >
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,8 +29,8 @@
   </head>
   <body>
     <nav>
-      <a href="/"><img src="./icon/favicon-96x96.png" alt="Tell Me on Date Logo"></a>
-      <h1><a href="/">Tell Me on Date</a></h1>
+      <a href="/"><img src="./icon/favicon-96x96.png" alt="TellMeonDate Logo"></a>
+      <h1><a href="/">TellMeonDate</a></h1>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a id="tmd-logout-button" href="/">Logout</a></li>
@@ -38,13 +38,16 @@
     </nav>
     <main>
       <section class="tmd-splash js-tmd-splash">
-        <h1>Welcome to Tell Me on Date!</h1>
-        <p>Tell Me on Date is a reminder application. After you sign up for an account, Tell Me on Date
-          can currently send you a reminder via SMS (Text Message). Click the login button below login or,
-          click the create account button to register for an account.
+        <h1>Welcome to TellMeonDate!</h1>
+        <p>TellMeonDate is a reminder application. After you sign up for an account, TellMeonDate
+          can currently send you a reminder via SMS (Text Message). Once you're logged in, all you
+          have to do is schedule your reminder and TellMeonDate will send it to you when it's time
+          to remind you. Click the login button below login or, click the register button to
+          register for an account.
         </p>
+        <img src="./icon/favicon-96x96.png" alt="TellMeonDate Logo">
         <button data-type="login">Login</button>
-        <button data-type="register">Create Account</button>
+        <button data-type="register">Register</button>
       </section>
       <p class="tmd-welcome-message js-tmd-welcome-message"></p>
       <div class="tmd-gen-modal js-tmd-gen-modal">
@@ -110,7 +113,7 @@
       <section class="tmd-reminders-section">
         <div>
           <h2>Reminders</h2>
-          <a href="/" id="tmd-new-reminder-button">New Reminder</a>
+          <button id="tmd-new-reminder-button">New Reminder</button>
         </div>
         <div class="tmd-reminders-table js-tmd-reminders-table">
         </div>

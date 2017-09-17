@@ -63,7 +63,6 @@ const MODAL_VISIBILITY = {
     create: false,
     header: 'Login',
     message:
-      `Welcome to Tell Me on Date!\n` +
       `Enter your credentials to access your dashboard.`
   },
   SHOW_REMINDER: {
@@ -79,7 +78,7 @@ const MODAL_VISIBILITY = {
     create: false,
     register: true,
     header: 'User Registration',
-    message: 'Please enter your information below. After you submit, you\ll be required to confirm your phone number so make sure you have it near by.'
+    message: 'Please enter your information below. After you submit, you\'ll be required to confirm your phone number.'
   }
 }
 
@@ -200,7 +199,7 @@ function getReminders(){
       $(TMD_HTML.remindersTable.body).append(htmlString);
       $(TMD_HTML.remindersTable.it).show();
       $(TMD_HTML.splashScreen.it).hide();
-      $('html').css('background-image', 'none');
+      $('body').css('background-image', 'none');
     }
   });
 }
@@ -239,7 +238,7 @@ function onNewReminderSubmit(event){
       document.getElementById(TMD_HTML.forms.newReminder.it.replace('#','')).reset();
       changeModalVisibility({});
       let _html = getReminderHtml(reminder);
-      $(TMD_HTML.remindersTable.body).append(_html);
+      $(TMD_HTML.remindersTable.body).prepend(_html);
     })
     .catch(err => {
       alert(err.responseText);
@@ -276,7 +275,7 @@ function getFormattedDate(dt){
   weekday[4] = 'Thursday';
   weekday[5] = 'Friday';
   weekday[6] = 'Saturday';
-  let hour = dt.getHours() > 12 ? dt.getHours() - 12 : dt.getHours();
+  let hour = dt.getHours() > 12 ? dt.getHours() - 12 : ( dt.getHours() == 0 ? 12 : dt.getHours() );
   let amPm = dt.getHours() > 11 ? "PM" : "AM";
   let dtString = `${weekday[dt.getDay()]}, ${dt.getMonth()+1}/${dt.getDate()}/${dt.getFullYear()} @ ` +
                 `${hour}:${(dt.getMinutes()<10?'0':'') + dt.getMinutes()} ${amPm}`;
