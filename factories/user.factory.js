@@ -13,7 +13,7 @@ function createOne(securePassword=true){
     password: pw,
     phoneNumber: fakes.random.number(9999999).toString(),
     email: fakes.internet.email(),
-    confirmed: true
+    confirmed: false
   };
 }
 

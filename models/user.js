@@ -1,8 +1,8 @@
 'use strict';
-
+const SchemaValidate = require('../utility/schema-validate');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const {schemaValidate} = require('../utility/schema-validate');
+const get = require('faker');
 mongoose.Promise = global.Promise;
 
 const UserSchema = new mongoose.Schema({
@@ -39,6 +39,14 @@ const UserSchema = new mongoose.Schema({
   confirmed: {
     type: Boolean,
     default: false
+  },
+  dateCreated: {
+    type: Date,
+    default: new Date()
+  },
+  confirmationCode: {
+    type: Number,
+    default: get.random.number( {min:10205008, max:99999999} )
   }
 });
 
@@ -63,10 +71,10 @@ UserSchema.statics.securePassword = function(password, useSync=false){
     return bcrypt.hash(password,10);
 }
 
+const schemaValidate = new SchemaValidate(UserSchema)
 UserSchema.statics.validateRequiredFields = schemaValidate.validateRequiredFields;
 UserSchema.statics.validateFieldTypes = schemaValidate.validateFieldTypes;
 
-schemaValidate.setSchema(UserSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {User};

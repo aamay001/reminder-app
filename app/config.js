@@ -11,7 +11,9 @@ const PRODUCTION = process.env.NODE_ENV === 'prod';
 const TWILIO_ACCOUNT = process.env.TWILIO_ACCOUNT;
 const TWILIO_TOKEN = process.env.TWILIO_TOKEN;
 const TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+const TEST_CONFIRM_NUMBER = process.env.TEST_CONFIRM_NUMBER;
 var MONGOOSE_DB;
+
 
 module.exports = {
   PORT,
@@ -25,5 +27,6 @@ module.exports = {
   MONGOOSE_DB,
   TWILIO_ACCOUNT,
   TWILIO_TOKEN,
-  TWILIO_NUMBER
+  TWILIO_NUMBER,
+  TEST_CONFIRM_NUMBER
 };
