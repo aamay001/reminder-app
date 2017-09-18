@@ -58,9 +58,9 @@
           <div class="tmd-create-reminder-mdc js-tmd-create-remider-mdc">
             <form action="/reminder" method="post" id="tmd-new-reminder-form">
               <label for="tmd-create-reminder-name">Name</label>
-              <input id="tmd-create-reminder-name" name="reminder-name" type="text" placeholder="Reminder Name" required maxlength="32" minlength="4">
+              <input id="tmd-create-reminder-name" name="reminder-name" type="text" required maxlength="32" minlength="4">
               <label for="tmd-create-reminder-text">Text</label>
-              <input id="tmd-create-reminder-text" name="reminder-text" type="text" placeholder="Reminder Text" required maxlength="140" minlength="5">
+              <input id="tmd-create-reminder-text" name="reminder-text" type="text" required maxlength="140" minlength="5">
               <label for="tmd-create-reminder-date">Date</label>
               <input id="tmd-create-reminder-date" name="reminder-date" type="datetime-local" required>
               <!-- <div class="g-recaptcha" data-sitekey="6LdrCzEUAAAAALcdrRmQuN1W21CLisreJ-pxCPnh"></div> -->
@@ -74,9 +74,9 @@
           <div class="tmd-login-mdc js-tmd-login-mdc">
               <form action="/api/auth/login" method="post" id="tmd-login-form">
                 <label for="tmd-login-username">User Name</label>
-                <input id="tmd-login-username" name="login-username" type="text" placeholder="User Name" required maxlength="32" minlength="4" autofocus>
+                <input id="tmd-login-username" name="login-username" type="text" required maxlength="32" minlength="4" autofocus>
                 <label for="tmd-login-password">Password</label>
-                <input id="tmd-login-password" name="login-password" type="password" placeholder="Password" required maxlength="70" minlength="8">
+                <input id="tmd-login-password" name="login-password" type="password" required maxlength="70" minlength="8">
                 <!-- <div class="g-recaptcha" data-sitekey="6LdrCzEUAAAAALcdrRmQuN1W21CLisreJ-pxCPnh"></div> -->
                 <button id="tmd-login-submit" type="submit" tabindex="3">Login</button>
               </form>
@@ -87,25 +87,25 @@
           <div class="tmd-register-mdc js-tmd-register-mdc">
               <form action="/api/user" method="post" id="tmd-register-form">
                 <label for="tmd-register-username">User Name</label>
-                <input id="tmd-register-username" name="username" type="text" placeholder="User Name" required maxlength="32" minlength="4" autofocus>
+                <input id="tmd-register-username" name="username" type="text" required maxlength="32" minlength="4" autofocus>
 
                 <label for="tmd-register-firstname">First Name</label>
-                <input id="tmd-register-firstname" name="firstName" type="text" placeholder="First Name" required maxlength="64" minlength="2" >
+                <input id="tmd-register-firstname" name="firstName" type="text" required maxlength="64" minlength="2" >
 
                 <label for="tmd-register-lastname">Last Name</label>
-                <input id="tmd-register-lastname" name="lastName" type="text" placeholder="Last Name" required maxlength="64" minlength="2" >
+                <input id="tmd-register-lastname" name="lastName" type="text" required maxlength="64" minlength="2" >
 
                 <label for="tmd-register-phone">Mobile Phone Number</label>
-                <input id="tmd-register-phone" name="phoneNumber" type="tel" placeholder="Mobile Phone Number" required maxlength="15" minlength="10" >
+                <input id="tmd-register-phone" name="phoneNumber" type="tel" required maxlength="15" minlength="10" >
 
                 <label for="tmd-register-email">Email</label>
-                <input id="tmd-register-email" name="email" type="email" placeholder="Email Address" required minlength="10" >
+                <input id="tmd-register-email" name="email" type="email" required minlength="10" >
 
                 <label for="tmd-register-password">Password</label>
-                <input id="tmd-register-password" name="password" type="password" placeholder="Password" required maxlength="70" minlength="8">
+                <input id="tmd-register-password" name="password" type="password" required maxlength="70" minlength="8">
 
                 <label for="tmd-register-password-confirm">Confirm Password</label>
-                <input id="tmd-register-password-confirm" name="password-confirm" type="password" placeholder="Confirm Password" required maxlength="70" minlength="8">
+                <input id="tmd-register-password-confirm" name="password-confirm" type="password" required maxlength="70" minlength="8">
                 <div class="g-recaptcha" id="tmd-register-recaptcha" data-sitekey="6LdrCzEUAAAAALcdrRmQuN1W21CLisreJ-pxCPnh"></div>
                 <button id="tmd-register-submit" type="submit">Register</button>
               </form>
