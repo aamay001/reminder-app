@@ -341,3 +341,9 @@ sub {
     height: 60%;
   }
 }
+
+.g-recaptcha > div {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}

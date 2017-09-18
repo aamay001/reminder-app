@@ -26,7 +26,7 @@ function seedDatabaseWithUser(){
 }
 
 function seedDatabaseWithReminders(user){
-  console.info('Seeding database with reminders');
+  console.info('Seeding database with reminders.');
   return new Promise((resolve, reject) =>{
     let reminders = reminderFactory.createMany(5, user);
     resolve(Reminders.insertMany(reminders));
@@ -42,5 +42,6 @@ module.exports = {
   seedDatabaseWithUser,
   seedDatabaseWithReminders,
   dropDatabase,
+  reminderFactory,
   userFactory
 }

@@ -36,7 +36,13 @@ const TMD_HTML = {
     registration: {
       it: '#tmd-register-form',
       password: '#tmd-register-password',
-      passwordConfirm: '#tmd-register-password-confirm'
+      passwordConfirm: '#tmd-register-password-confirm',
+      username: '#tmd-register-username',
+      password: '#tmd-register-password',
+      email: '#tmd-register-email',
+      phoneNumber: '#tmd-register-phone',
+      firstName: '#tmd-register-firstname',
+      lastName: '#tmd-register-lastname'
     }
   },
   newReminderButton: '#tmd-new-reminder-button',
@@ -46,7 +52,7 @@ const TMD_HTML = {
 const TMD_API = {
   login: '/api/auth/login',
   reminders: '/api/reminder',
-  username: ''
+  user: '/api/user'
 }
 
 const TMD_TOKEN_HEADER = 'token';
@@ -114,12 +120,39 @@ function onSubmitRegistration(event){
       alert('Password does not match confirmation password.');
       return;
   }
-    //registerUser();
+
+  registerUser()
+    .then(res => {
+      $(TMD_HTML.forms.login.username).val(res.username);
+      alert('Your account has been created. Please login with your username and password.');
+      changeModalVisibility(MODAL_VISIBILITY.SHOW_LOGIN);
+    })
+    .catch(err => {
+      console.log(err);
+      alert(getErrorMessage(err));
+    })
 }
 
 function registerUser(){
-  return new Promise((resolve, reject) => {
-    resolve();
+  return $.ajax(TMD_API.user, {
+    type: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    dataType: 'json',
+    data: getNewUserData()
+  });
+}
+
+function getNewUserData(){
+  return JSON.stringify({
+    "username": $(TMD_HTML.forms.registration.username).val(),
+    "password": $(TMD_HTML.forms.registration.password).val(),
+    "firstName": $(TMD_HTML.forms.registration.firstName).val(),
+    "lastName": $(TMD_HTML.forms.registration.lastName).val(),
+    "email": $(TMD_HTML.forms.registration.email).val(),
+    "phoneNumber": $(TMD_HTML.forms.registration.phoneNumber).val(),
+    "g-recaptcha-response": grecaptcha.getResponse()
   });
 }
 
@@ -127,10 +160,10 @@ function registerUser(){
 // USER LOGIN
 /////////////////////////
 function onLoginFormSubmit(event){
+  prevDef(event);
   if (!$(TMD_HTML.forms.login.it)[0].checkValidity()){
     return;
   }
-  prevDef(event);
   loginUser()
     .then(() => {
       return getReminders();
@@ -140,7 +173,7 @@ function onLoginFormSubmit(event){
       $(TMD_HTML.remindersSection).show();
     })
     .catch(err => {
-      console.error(err);
+      alert(err.responseText);
     });
 }
 
@@ -151,15 +184,15 @@ function loginUser(){
       success: res => {
         loginSuccess(res.authToken);
       },
-      error: res => {
-        let message = (res.responseJSON ? res.responseJSON.message : res.responseText );
-        alert(message);
+      error: err => {
+        alert(getErrorMessage(err));
       }
     });
 }
 
 function loginSuccess(token){
   TMD_API.username = localStorage.getItem('username') || $(TMD_HTML.forms.login.username).val();
+  TMD_API.username = TMD_API.username.toLowerCase();
   document.getElementById(TMD_HTML.forms.login.it.replace('#','')).reset();
   localStorage.setItem('username', TMD_API.username);
   localStorage.setItem('authToken', token);
@@ -241,7 +274,7 @@ function onNewReminderSubmit(event){
       $(TMD_HTML.remindersTable.body).prepend(_html);
     })
     .catch(err => {
-      alert(err.responseText);
+      alert(getErrorMessage(err));
     })
 }
 
@@ -348,7 +381,7 @@ function getAuthHeader(type){
   }
   else if (type === TMD_BASIC_HEADER){
     return {
-      "Authorization": "basic_tmd " + btoa(`${$(TMD_HTML.forms.login.username).val()}:${$(TMD_HTML.forms.login.password).val()}`)
+      "Authorization": "basic " + btoa(`${$(TMD_HTML.forms.login.username).val()}:${$(TMD_HTML.forms.login.password).val()}`)
     };
   }
 }
@@ -379,4 +412,12 @@ function updateMinDate(){
         `${now.getMinutes() < 10 ? '0' + now.getMinutes():now.getMinutes()}`;
   $(TMD_HTML.forms.newReminder.dateField).attr('min', now);
   return now;
+}
+
+function getErrorMessage(res){
+  let err = (res.responseJSON ? res.responseJSON.message : res.responseText );
+  if (err.includes('reCAPTCHA')){
+    grecaptcha.reset();
+  }
+  return err;
 }

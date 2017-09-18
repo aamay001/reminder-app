@@ -25,20 +25,6 @@ app.use(serverController.cors);
 app.use(express.static('public'));
 auth.init(app);
 
-////////////////////////////////////////
-// Manual DB population.
-// let {User} = require('./models/user');
-// let user = require('./factories/user.factory').createOne(false);
-// console.info(user);
-// user.password = User.securePassword(user.password,true);
-// User.create(user)
-// .then(newUser => {
-//   let reminder = require('./factories/reminder.factory');
-//   let r  = reminder.createMany(10, newUser._id.toString());
-//   let {Reminders} = require('./models/reminder');
-//   Reminders.insertMany(r);
-// });
-
 ///////////////////
 // Routes
 ///////////////////

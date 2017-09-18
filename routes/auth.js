@@ -9,7 +9,7 @@ const { basic, jwt, createToken } = require('../controllers/auth/auth');
 
 router.post('/login', basic, (req,res) => {
   if (! req.user.ok ){
-    return res.status(401).json(req.user);
+    return res.status(401).send(req.user);
   }
   const authToken = createToken(req.user.apiGet());
   return res.json({authToken});
