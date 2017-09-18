@@ -46,13 +46,20 @@ class SchemaValidate {
   // are of the correct type.
   validateFieldTypes(requestBody) {
     return new Promise( (resolve, reject) => {
-      const badTypes = Object.keys(requestBody).find( key => {
-        if (this.schema.paths[key].instance === 'Date'){
-          console.log(requestBody[key]);
-          return !isValid(new Date(requestBody[key]));
-        }
-        return !( typeof(requestBody[key]) === (this.schema.paths[key].instance.toLowerCase()));
+      // Get required fields so we only check the required schema field types.
+      const requiredFields = Object.keys(this.schema.obj).filter( property => {
+        return Object.keys(this.schema.obj[property]).includes('required');
       });
+
+      const badTypes = Object.keys(requestBody).find( key => {
+        if (requiredFields.includes(key)){
+          if (this.schema.paths[key].instance === 'Date'){
+            return !isValid(new Date(requestBody[key]));
+          }
+          return !( typeof(requestBody[key]) === (this.schema.paths[key].instance.toLowerCase()));
+        }
+      });
+
       if(badTypes){
         return reject({
           ok: false,

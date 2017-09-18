@@ -20,6 +20,7 @@ const INVALID_LOGIN = {
 // Used to
 const basicStrategy = new BasicStrategy((username, password, callback) => {
   let user;
+  username = username.toLowerCase();
   User.findOne({username: username})
     .then(_user => {
       user = _user;

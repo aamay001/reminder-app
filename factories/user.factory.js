@@ -7,12 +7,12 @@ function createOne(securePassword=true){
   let pw = fakes.internet.password(10,false);
   pw = (securePassword ? User.securePassword(pw, true) : pw);
   return {
-    username: fakes.internet.userName(),
+    username: fakes.internet.userName().toLowerCase(),
     firstName: fakes.name.firstName(),
     lastName: fakes.name.lastName(),
     password: pw,
     phoneNumber: fakes.random.number(9999999).toString(),
-    email: fakes.internet.email(),
+    email: fakes.internet.email().toLowerCase(),
     confirmed: false
   };
 }
