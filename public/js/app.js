@@ -173,7 +173,7 @@ function onLoginFormSubmit(event){
       $(TMD_HTML.remindersSection).show();
     })
     .catch(err => {
-      alert(err.responseText);
+      alert(getErrorMessage(err));
     });
 }
 
@@ -183,9 +183,6 @@ function loginUser(){
       headers: getAuthHeader(TMD_BASIC_HEADER),
       success: res => {
         loginSuccess(res.authToken);
-      },
-      error: err => {
-        alert(getErrorMessage(err));
       }
     });
 }
@@ -340,9 +337,11 @@ function changeModalVisibility(options){
 
   if (options.create){
     $(TMD_HTML.modal.content.newReminder).show();
+    $(TMD_HTML.newReminderButton).hide();
   }
   else{
     $(TMD_HTML.modal.content.newReminder).hide();
+    $(TMD_HTML.newReminderButton).fadeIn();
   }
 
   if(options.register){

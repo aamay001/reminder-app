@@ -74,7 +74,7 @@
           <div class="tmd-login-mdc js-tmd-login-mdc">
               <form action="/api/auth/login" method="post" id="tmd-login-form">
                 <label for="tmd-login-username">User Name</label>
-                <input id="tmd-login-username" name="login-username" type="text" required maxlength="32" minlength="4" autofocus>
+                <input id="tmd-login-username" name="login-username" type="text" required maxlength="32" minlength="4" autofocus autocomplete="off">
                 <label for="tmd-login-password">Password</label>
                 <input id="tmd-login-password" name="login-password" type="password" required maxlength="70" minlength="8">
                 <!-- <div class="g-recaptcha" data-sitekey="6LdrCzEUAAAAALcdrRmQuN1W21CLisreJ-pxCPnh"></div> -->
@@ -111,12 +111,11 @@
               </form>
             </div>
           <!-- Registration Modal End-->
-
         </div>
       <section class="tmd-reminders-section">
         <div>
           <h2>Reminders</h2>
-          <button id="tmd-new-reminder-button">New Reminder</button>
+          <button id="tmd-new-reminder-button" name="new-reminder" title="Create a New Reminder">+</button>
         </div>
         <div class="tmd-reminders-table js-tmd-reminders-table">
         </div>
