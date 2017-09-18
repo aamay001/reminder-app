@@ -34,11 +34,11 @@ const createUser = (req, res) => {
                         req.body.password = secPassword;
                         return User.create(req.body)
                           .then(user => {
-                            const text = `Here is your TellMeonDate account confirmation code: ${user.confirmationCode}`;
-                            twilio.sendSMS(text, user.phoneNumber)
-                            .then( message => {
+                            //const text = `Here is your TellMeonDate account confirmation code: ${user.confirmationCode}`;
+                            //twilio.sendSMS(text, user.phoneNumber)
+                            //.then( message => {
                               return res.status(201).send(user.apiGet());
-                            });
+                            //});
                           });
                       });
                   }
