@@ -25,7 +25,7 @@ const createUser = (req, res) => {
                                       {email: req.body.email},
                                       {phoneNumber: req.body.phoneNumber}]})
                 .then(user => {
-                  if (user){
+                  if (user) {
                     return Promise.reject('Username, phone number, or email address conflict. Username, phone number, or email address is already in use.');
                   }
                   else {
@@ -35,10 +35,10 @@ const createUser = (req, res) => {
                         return User.create(req.body)
                           .then(user => {
                             //const text = `Here is your TellMeonDate account confirmation code: ${user.confirmationCode}`;
-                            //twilio.sendSMS(text, user.phoneNumber)
-                            //.then( message => {
-                              return res.status(201).send(user.apiGet());
-                            //});
+                            //return twilio.sendSMS(text, user.phoneNumber)
+                              //.then( message => {
+                                return res.status(201).send(user.apiGet());
+                              //});
                           });
                       });
                   }

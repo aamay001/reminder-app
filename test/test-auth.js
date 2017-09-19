@@ -65,9 +65,7 @@ describe('AUTHENTICATION'.cyan, function(){
           payload.user.should.deep.equal({
             username: mockUser.username,
             firstName: mockUser.firstName,
-            lastName: mockUser.lastName,
-            email: mockUser.email,
-            phoneNumber: mockUser.phoneNumber
+            lastName: mockUser.lastName
           });
         })
     });

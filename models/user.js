@@ -54,9 +54,9 @@ UserSchema.methods.apiGet = function(){
   return {
     username: this.username,
     firstName: this.firstName,
-    lastName: this.lastName,
-    email: this.email,
-    phoneNumber: this.phoneNumber
+    lastName: this.lastName
+    //email: this.email,
+    //phoneNumber: this.phoneNumber
   };
 }
 
