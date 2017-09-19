@@ -24,7 +24,7 @@ This application was designed as a capstone project while studying at Thinkful.
 - jQuery
 
 ## Screenshots
-
+![TellMeonDate Screenshots](http://andyamaya.com/downloads/ghimg/tellmeon.date.png "TellMeonDate ScreenShots")
 
 
 
