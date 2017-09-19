@@ -24,8 +24,8 @@ This application was designed as a capstone project while studying at Thinkful.
 - jQuery
 
 ## Screenshots
-![alt text](http://andyamaya.com/downloads/ghimg/tellmeon.date2.png "Landing")
-![alt text](http://andyamaya.com/downloads/ghimg/tellmeon.date3.png "User Registration")
-![alt text](http://andyamaya.com/downloads/ghimg/tellmeon.date4.png "Login")
-![alt text](http://andyamaya.com/downloads/ghimg/tellmeon.date5.png "User Dashboard")
-![alt text](http://andyamaya.com/downloads/ghimg/tellmeon.date6.png "New Reminder")
+![Landing](http://andyamaya.com/downloads/ghimg/tellmeon.date2.png "Landing")
+![User Registration](http://andyamaya.com/downloads/ghimg/tellmeon.date3.png "User Registration")
+![Login](http://andyamaya.com/downloads/ghimg/tellmeon.date4.png "Login")
+![User Dashboard](http://andyamaya.com/downloads/ghimg/tellmeon.date5.png "User Dashboard")
+![New Reminder](http://andyamaya.com/downloads/ghimg/tellmeon.date6.png "New Reminder")
