@@ -1,4 +1,4 @@
-# TellMeonnDate
+# TellMeonDate
 App that sends reminders via text.
 
 [Live Demo](http://tellmeon.date)
