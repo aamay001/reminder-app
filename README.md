@@ -25,4 +25,6 @@ This application was designed as a capstone project while studying at Thinkful.
 
 ## Screenshots
 ![Landing](http://andyamaya.com/downloads/ghimg/tellmeon.date2.png "Landing")
+![User Registration](http://andyamaya.com/downloads/ghimg/tellmeon.date3.png "User Registration")
+
 
