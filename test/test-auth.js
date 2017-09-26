@@ -84,7 +84,7 @@ describe('AUTHENTICATION'.cyan, function(){
             .set('Authorization', `Bearer ${token}`)
             .then(res => {
               res.should.have.status(200);
-              res.body.should.be.an('array');
+              res.body.should.be.an('object');
             });
         })
     });

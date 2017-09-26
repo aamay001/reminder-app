@@ -111,6 +111,7 @@ footer {
   bottom: 0;
   padding: 15px 10px 0px 10px;
   font-size: 18px;
+  z-index: 100;
 }
 
 main {
@@ -134,7 +135,7 @@ h2 {
   margin-right: auto;
   margin-bottom: 75px;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.97);
   text-align: center;
   overflow: auto;
   color: black;
@@ -231,6 +232,7 @@ header,
 .tmd-reminders-section > div > h2 {
   display: inline-block;
   margin-top: 35px;
+  width: 50%;
 }
 
 .tmd-reminders-section div {
@@ -292,6 +294,33 @@ sub {
   margin-bottom: 75px;
 }
 
+.tmd-page-size-selector h5
+, .tmd-page-size-selector ul
+, .tmd-page-size-selector li  {
+  display: inline;
+}
+
+.tmd-page-size-selector{
+  display: inline-block;
+  position: relative;
+  text-align: right;
+  width: 50% !important;
+  float:right;
+  margin-top: 35px;
+}
+
+.tmd-page-size-selector a{
+  color: black;
+}
+
+.tmd-ps-selected {
+  text-decoration: underline;
+}
+
+.tmd-gen-modal{
+  z-index: 50;
+}
+
 /* Larger Screens */
 @media only screen and (min-width: 769px){
   .tmd-splash,
@@ -299,7 +328,7 @@ sub {
     width: 50%;
     min-height: 20%;
     position: absolute;
-    top: 15%;
+    top: 8%;
     left: 25%;
     padding: 25px;
   }

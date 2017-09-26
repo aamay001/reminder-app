@@ -37,15 +37,19 @@ const createReminder = (req, res) => {
 }
 
 const getReminders = (req, res) => {
+  let currentPage = parseInt(req.query.pageNumber) || 0;
+  let pageSize = parseInt(req.query.pageSize) || 10;
   getUserId(req)
   .then(userId => {
     return Reminders
       .find({user_id: userId})
-      .sort({date: "desc" });
+      .sort({date: "desc" })
+      .skip(pageSize*currentPage)
+      .limit(pageSize);
   })
   .then(reminders => {
     reminders = reminders.map(e=>e.apiGet());
-    return res.status(200).json(reminders);
+    return res.status(200).json( {reminders, nextPage: currentPage+1 , prevPage: currentPage});
   })
   .catch(err => {
     console.error(err);

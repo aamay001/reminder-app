@@ -3,6 +3,7 @@
 const TMD_HTML = {
   welcomeMessage: '.js-tmd-welcome-message',
   remindersSection: '.tmd-reminders-section',
+  pageSizeSelection: '#tmd-ps-10, #tmd-ps-25, #tmd-ps-50',
   splashScreen: {
     it: '.tmd-splash',
     loginButton: 'button[data-type="login"]',
@@ -88,6 +89,11 @@ const MODAL_VISIBILITY = {
   }
 }
 
+let currentReminderPage = 0;
+let pageSize = localStorage.getItem('pageSize') || 10;
+$(`#tmd-ps-${pageSize}`).addClass('tmd-ps-selected');
+pageSize = parseInt(pageSize);
+
 $(onReady);
 
 function onReady(){
@@ -105,6 +111,7 @@ function bindUserInput(){
   $(TMD_HTML.splashScreen.loginButton).on('click', showLogin);
   $(TMD_HTML.splashScreen.registerButton).on('click', showRegistration);
   $(TMD_HTML.forms.registration.it).on('submit', onSubmitRegistration);
+  $(TMD_HTML.pageSizeSelection).on('click', handlePageSizeSelection);
 }
 
 /////////////////////////
@@ -208,10 +215,11 @@ function tryAutoLogin(){
         $(TMD_HTML.remindersSection).show();
       })
       .catch(err => {
+        $(TMD_HTML.welcomeMessage).hide();
         changeModalVisibility(MODAL_VISIBILITY.SHOW_LOGIN);
       })
   } else {
-    changeModalVisibility({});
+    $(TMD_HTML.welcomeMessage).hide();
   }
 }
 
@@ -222,8 +230,12 @@ function getReminders(){
   return $.ajax(TMD_API.reminders, {
     type: 'GET',
     headers: getAuthHeader(TMD_TOKEN_HEADER),
-    success: reminders => {
-      var htmlString = reminders.reduce((all, current) => {
+    data: {
+      pageNumber: currentReminderPage,
+      pageSize: pageSize
+    },
+    success: data => {
+      var htmlString = data.reminders.reduce((all, current) => {
         return all = all + getReminderHtml(current);
       }, '');
       $(TMD_HTML.remindersTable.body).append(htmlString);
@@ -254,6 +266,7 @@ function onNewReminderClick(event){
   let currentTime = updateMinDate();
   $(TMD_HTML.forms.newReminder.dateField).val(currentTime);
   changeModalVisibility(MODAL_VISIBILITY.SHOW_REMINDER);
+  window.scrollTo(0,0);
 }
 
 function onCancelReminderClick(event){
@@ -292,6 +305,7 @@ function logout(event){
   prevDef(event);
   localStorage.removeItem('authToken');
   localStorage.removeItem('username');
+  localStorage.removeItem('pageSize');
   location.reload();
 }
 
@@ -419,4 +433,13 @@ function getErrorMessage(res){
     grecaptcha.reset();
   }
   return err;
+}
+
+function handlePageSizeSelection(e){
+  prevDef(e);
+  $(TMD_HTML.pageSizeSelection).removeClass('tmd-ps-selected');
+  $(e.target).addClass('tmd-ps-selected');
+  pageSize = parseInt($(e.target).text());
+  localStorage.setItem('pageSize', pageSize);
+  location.reload();
 }

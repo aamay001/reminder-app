@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 const auth = require('../controllers/auth/auth');
 const controller = require('../controllers/reminder');
 
-router.get('/', auth.jwt, controller.getReminders);
+router.get('/', auth.jwt, jsonParser, controller.getReminders);
 router.post('/', auth.jwt, jsonParser, controller.createReminder);
 
 module.exports = router;
