@@ -53,8 +53,8 @@ describe('REMINDERS'.cyan, function(){
             .set('Authorization', `Bearer ${token}`)
             .then(res => {
               res.should.have.status(200);
-              res.body.should.be.an('array');
-              res.body.length.should.equal(5);
+              res.body.reminders.should.be.an('array');
+              res.body.reminders.length.should.equal(5);
             })
         })
     });
