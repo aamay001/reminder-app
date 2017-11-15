@@ -1,6 +1,9 @@
 'use strict';
 
-require('dotenv').config();
+if (process.env.NODE_ENV === 'dev' ||
+  process.env.NODE_ENV === 'test') {
+  require('dotenv').config();
+}
 const express = require('express');
 var app = express();
 const dispatcher = require('./service/dispatcher.service');
