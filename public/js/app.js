@@ -27,7 +27,8 @@ const TMD_HTML = {
     login: {
       it: '#tmd-login-form',
       username: '#tmd-login-username',
-      password: '#tmd-login-password'
+      password: '#tmd-login-password',
+      demo: "#login-with-demo"
     },
     newReminder: {
       it: '#tmd-new-reminder-form',
@@ -112,6 +113,7 @@ function bindUserInput(){
   $(TMD_HTML.splashScreen.registerButton).on('click', showRegistration);
   $(TMD_HTML.forms.registration.it).on('submit', onSubmitRegistration);
   $(TMD_HTML.pageSizeSelection).on('click', handlePageSizeSelection);
+  $(TMD_HTML.forms.login.demo).on('click', enterDemoCredentials)
 }
 
 /////////////////////////
@@ -182,6 +184,11 @@ function onLoginFormSubmit(event){
     .catch(err => {
       alert(getErrorMessage(err));
     });
+}
+
+function enterDemoCredentials() {
+  $(TMD_HTML.forms.login.username).val('demo');
+  $(TMD_HTML.forms.login.password).val('EVjpEBnuju');
 }
 
 function loginUser(){

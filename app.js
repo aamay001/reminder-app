@@ -1,5 +1,5 @@
 'use strict';
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'dev' ||
   process.env.NODE_ENV === 'test') {
   require('dotenv').config();
