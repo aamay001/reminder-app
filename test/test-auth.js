@@ -18,7 +18,7 @@ const auth = require('../controllers/auth/auth');
 const testUtil = require('../utility/testutil');
 const AUTH_ENDPOINT = '/api/auth/login';
 
-describe('AUTHENTICATION'.cyan, function(){
+describe('AUTHENTICATION'.cyan, function() {
   let mockUser;
 
   before(function(){

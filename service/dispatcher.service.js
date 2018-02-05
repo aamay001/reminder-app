@@ -88,19 +88,6 @@ function checkForDispatchable(reminders){
 function dispatch(reminder){
   return User.findOne({_id: reminder.user_id})
     .then(user => {
-      if(config.PRODUCTION){
-        return twilio.sendSMS(reminder.text, user.phoneNumber)
-          .then(message => {
-            reminder.complete = true,
-            reminder.sentDate = new Date().toISOString();
-            reminder.sentConfirmation = message.sid;
-            return Reminders.findByIdAndUpdate(reminder._id, reminder)
-              .then(updatedReminder => {
-                return updatedReminder;
-              });
-          })
-      }
-      else{
         reminder.complete = true,
         reminder.sentDate = new Date().toISOString();
         reminder.sentConfirmation = config.DEVELOPMENT;
@@ -108,7 +95,6 @@ function dispatch(reminder){
           .then(updatedReminder => {
             return updatedReminder;
           });
-      }
     })
     .catch(err => {
       console.log(err);
