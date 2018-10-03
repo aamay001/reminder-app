@@ -1,10 +1,10 @@
 'use strict';
 
 const {User} = require('../models/user');
-const twilio = require('../service/twilio.service');
+// const twilio = require('../service/twilio.service');
 const config = require('../app/config');
 const reCAPTCHA = require('recaptcha2');
-twilio.init();
+// twilio.init();
 
 const recaptcha = new reCAPTCHA({
   siteKey: config.CAPTCHA_SITE_KEY,
