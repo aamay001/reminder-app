@@ -1,7 +1,7 @@
 # TellMeonDate
 App that sends reminders via text.
 
-[Live Demo](http://tellmeon.date)
+[Live Demo](https://tellmeondate.herokuapp.com)
 
 This application was designed as a capstone project while studying at Thinkful.
 
