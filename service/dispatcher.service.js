@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('../app/config');
-const twilio = require('./twilio.service');
+// const twilio = require('./twilio.service');
 const {User} = require('../models/user');
 const {Reminders} = require('../models/reminder');
 const endOfToday = require('date-fns/end_of_today');
@@ -15,7 +15,7 @@ let STOP_REQUESTED = false;
 let TIMER;
 
 function start(){
-  twilio.init();
+  // twilio.init();
   resetInterval();
   console.log('Dispatcher started.');
 }
