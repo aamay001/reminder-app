@@ -44,7 +44,7 @@ if (require.main === module) {
   serverController
     .start()
     .then(() => {
-      // dispatcher.start();
+      dispatcher.start();
     })
     .catch(err => {
       console.error(err);
