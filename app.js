@@ -25,7 +25,7 @@ if (DEVELOPMENT) {
 }
 
 app.use(serverController.cors);
-app.use(express.static('public'));
+app.use(express.static('./public'));
 auth.init(app);
 
 ///////////////////
@@ -44,7 +44,7 @@ if (require.main === module) {
   serverController
     .start()
     .then(() => {
-      dispatcher.start();
+      return dispatcher.start();
     })
     .catch(err => {
       console.error(err);

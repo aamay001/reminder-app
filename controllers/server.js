@@ -18,7 +18,7 @@ function use(app){
 function start(database = config.DATABASE_URL) {
   return new Promise((resolve, reject) => {
     mongoose.set('useCreateIndex', true);
-    mongoose.connect(database, { useNewUrlParser: true }, err => {
+    mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
       if (err) {
         console.error(constants.SERVER_DB_CONNECT_ERROR(err));
         reject(err);
