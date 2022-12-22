@@ -17,7 +17,7 @@
     "date-fns": "^1.29.0",
     "express": "^4.16.3",
     "faker": "^4.1.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.3.1",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
